@@ -1,6 +1,27 @@
-import items, enemies
+import items, enemies, actions, world
 
 class MapTile:
+
+    def adjacent_moves(self):
+        """Returns all move actions for adjacent tiles."""
+        moves =[]
+        if world.tile_exists(self.x + 1, self.y):
+            moves.append(actions.MoveEast())
+        if world.tile_exists(self.x - 2,self.y):
+            moves.append(actions.MoveWest())
+        if world.tile_exists(self.x, self.y -1):
+            moves.append(actions.MoveNorth())
+        if world.tile_exists(self.x, self.y+1):
+            moves.append(actions.MoveSouth())
+        return moves
+
+    def available_actions(self):
+        moves = self.adjacent_moves()
+        moves.append(actions.ViewInventory())
+
+        return moves
+    
+    
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -38,6 +59,13 @@ class EnemyRoom(MapTile):
             the_player.hp = the_player.hp -self.enemy.damage
             print("Enemy does {} damage. You have {} hp remaining.".format(self.enemy.damage,the_player.hp))
 
+    def available_actions(self):
+        if self.enemy.is_alive():
+            return [action.Flee(tile=self),actions.Attack(enemy= self.enemy)]
+        else:
+            return self.adjacent_moves()
+                    
+    
 class GiantSpiderRoom(EnemyRoom):
     def __init__(self, x, y):
         super().__init__(x,y, enemies.GiantSpider())
@@ -59,10 +87,7 @@ class FindDaggerRoom(LootRoom):
     def intro_text(self):
         return """
         You notice somthing shiney in the corner; its a dagger!
-        You pick it up.
-
-This constructor 
-
+        You pick it up
         """
 
 
