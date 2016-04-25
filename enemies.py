@@ -1,4 +1,6 @@
-class Enemy:
+
+
+class Enemy(object):
     def__init__(self,name,hp,damage):
         self.name = name
         self.hp = hp
