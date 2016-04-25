@@ -1,7 +1,7 @@
 import random
 import items, world
 
-class Player()
+class Player():
     def __init__(self):
         self.inventory = [items.Gold(15), items.Rock()]
         self.hp = 100
@@ -15,7 +15,7 @@ class Player()
         for item in self.inventory:
             print(item,'/n')
 
-    def do_action(self,action **kwargs):
+    def do_action(self,action, **kwargs):
         action_method = getattr(self,action.method.__name__)
         if action_method:
             action_method(**kwargs)
@@ -27,7 +27,7 @@ class Player()
         self.do_action(available_moves[r])
     
 
-    def move(self, dx, dy)
+    def move(self, dx, dy):
         self.location_x += dx
         self.location_y += dy
         print(world.tile_exists(self.location_x,self.location_y).intro_text())
@@ -48,15 +48,12 @@ class Player()
         best_weapon = None
         max_dmg = 0
         for i in self.inventory:
-            if isinstance(i, items.Weapon):
-                if i.damage > i.damage
+            if isinstance(i, items.Weapon) and i.damage > i.damage:
                 best_weapon = i
 
         print ("you use {} against {}".format(best_weapon.name, enemy.name))
-               enemy.hp -= best_weapon.damage
-               if not enemy.is_alive()
-                   print("You killed {}!".format(enemy.name,enemy.hp))
-                else:
-                    print("{} HP is {}".format(enemy.name, enemy.hp))
-                    
-        
+        enemy.hp -= best_weapon.damage
+        if not enemy.is_alive():
+            print("You killed {}!".format(enemy.name,enemy.hp))
+        else:
+            print("{} HP is {}".format(enemy.name, enemy.hp))

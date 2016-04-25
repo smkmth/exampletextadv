@@ -89,10 +89,18 @@ class FindDaggerRoom(LootRoom):
         You notice somthing shiney in the corner; its a dagger!
         You pick it up
         """
+class LeaveCaveRoom(MapTile):
+    def intro_text(self):
+        return """
+        you see a bright light in the distance
+        ...
+        it grows as you approach,
+        its sunlight!
+        Victory is Yours!
+        """
 
-
-
-
+    def modify_player(self, player):
+        player.victory = True
 
     
             
